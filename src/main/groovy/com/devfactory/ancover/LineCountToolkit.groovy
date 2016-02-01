@@ -12,15 +12,22 @@ class LineCountToolkit {
 
     static int countLines(File file) {
 
-        // parsing and cleaning up the comments
-        CompilationUnit cu = JavaParser.parse(file, 'UTF-8', false);
-        CompilationUnit ccu = JavaParser.parse(new StringReader(cu.toString()), false)
+        try {
+            // parsing and cleaning up the comments
+            CompilationUnit cu = JavaParser.parse(file, 'UTF-8', false);
+            CompilationUnit ccu = JavaParser.parse(new StringReader(cu.toString()), false)
 
-        // counting
-        LineCounter counter = new LineCounter()
-        counter.visit(ccu, null)
+            // counting
+            LineCounter counter = new LineCounter()
+            counter.visit(ccu, null)
 
-        return counter.totalLines
+            return counter.totalLines
+        }
+        catch (Exception e) {
+            println "Failed to parse ${file.name}"
+        }
+
+        return -1
     }
 
 
