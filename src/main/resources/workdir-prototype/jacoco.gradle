@@ -21,7 +21,7 @@ task testDebugUnitTestCoverage (type:JacocoReport, dependsOn: "test", overwrite 
     def coverageSourceDirs = ["src/main/java"]
     additionalSourceDirs = files(coverageSourceDirs)
     sourceDirectories = files(coverageSourceDirs)
-    executionData = files("${project.buildDir}/jacoco/testDebugUnitTest.exec")
+    executionData = files("${project.buildDir}/jacoco/test.exec")
 
     reports {
         xml.enabled = true

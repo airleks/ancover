@@ -1,6 +1,6 @@
 package com.devfactory.ancover
 
-class Application {
+class AndroidCoverageCheckScript {
 
     static void main(String[] args) {
 
