@@ -23,7 +23,7 @@ class LineCountToolkit {
 
             return counter.totalLines
         }
-        catch (Exception e) {
+        catch (Throwable e) {
             println "Failed to parse ${file.name}"
         }
 

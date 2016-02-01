@@ -11,7 +11,6 @@ class ProjectLinesCounterScript {
 
         File rootDir = new File(args[0])
 
-
         File repoList = new File(rootDir, 'repos.txt')
         File logs = new File(rootDir, "line-counter-${new Date().format('MM-dd-yyyy_HH-mm-ss')}.csv")
 
@@ -19,13 +18,17 @@ class ProjectLinesCounterScript {
 
         println 'Starting Line Counter'
 
+        int projectsCounter = 0;
+
         repoList.eachLine { l ->
             // retrieve info
             String url = l.endsWith('.git') ? l : l + '.git'
             String repo = url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('.'))
 
+            projectsCounter++;
+
             // clone repo
-            println "Cloning ${url}"
+            println "${projectsCounter}: Cloning ${url}"
             int cloneCode = AncoverToolkit.clone(rootDir, url)
             if (cloneCode != 0) {
                 println "Failed to clone ${repo}"
@@ -33,7 +36,7 @@ class ProjectLinesCounterScript {
                 return
             }
 
-            println "${repo} is cloned"
+            println "${projectsCounter}: ${repo} is cloned"
 
             // count lines
             File repoDir = new File(rootDir, repo)
@@ -58,7 +61,7 @@ class ProjectLinesCounterScript {
                 }
             }
 
-            println "${repo} lines: ${codeLines}, test lines: ${testLines}"
+            println "${projectsCounter}: ${repo} lines: ${codeLines}, test lines: ${testLines}"
             logs << "${url};${codeLines};${testLines};\r\n"
         }
     }
